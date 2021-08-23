@@ -30,7 +30,6 @@ export class ColorController {
 
   @Post()
   @Roles(ListRole.Admin)
-  //  SetMetadata('roles', ['Admin'])
   @UsePipes(ValidationPipe)
   create(@Body() createColorDto: CreateColorDto): Promise<Color> {
     return this.colorService.create(createColorDto);
@@ -38,7 +37,6 @@ export class ColorController {
 
   @Get()
   @Public()
-  // SetMetadata(IS_PUBLIC_KEY, true)
   findAll(): Promise<Color[]> {
     return this.colorService.findAll();
   }
