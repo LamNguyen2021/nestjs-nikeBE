@@ -31,3 +31,5 @@ create
 create
 
 nest -> nest g res <ten folder>
+
+- nguon tham khao deploy: https://www.joshmorony.com/deploying-a-production-nestjs-server-on-heroku/
