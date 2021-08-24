@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/entities/user.entity';
@@ -36,6 +36,7 @@ export class AuthService {
 
     // phải có roleName vì trong roles-guard.ts sẽ so sánh role trong token với role trong BE qui định (SetMetadata('roles', ['Admin']))
     return {
+      statusCode: HttpStatus.OK,
       info,
       access_token: this.jwtService.sign(payload),
       message: 'login successfully',
