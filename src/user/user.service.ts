@@ -1,14 +1,11 @@
 import {
   BadRequestException,
-  HttpException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { exception } from 'console';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { IdRoleDto } from 'src/role/dto/id-role.dto';
 import { Role } from 'src/role/entities/role.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -107,22 +104,6 @@ export class UserService {
       .populate('status');
 
     return updatedUser;
-
-    // user.password = updateUserDto.password;
-    // user.email = updateUserDto.email;
-    // user.name = updateUserDto.name;
-    // user.yearOfBirth = updateUserDto.yearOfBirth;
-    // user.address = updateUserDto.address;
-    // user.status = status;
-    // user.role = role;
-
-    // const userSave = await user.save().catch((err) => {
-    //   throw new BadRequestException('Email already used');
-    // });
-    // return await this.userModel
-    //   .findById(userSave._id, { password: 0 })
-    //   .populate('role')
-    //   .populate('status');
   }
 
   async removeUser(idUserDto: IdUserDto): Promise<string> {
