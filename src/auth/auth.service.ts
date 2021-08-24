@@ -27,8 +27,16 @@ export class AuthService {
       userId: user._id,
       roleName: user.role.nameRole || '',
     };
+
+    const info = {
+      id: user._id,
+      username: user.username,
+      role: user.role.nameRole,
+    };
+
     // phải có roleName vì trong roles-guard.ts sẽ so sánh role trong token với role trong BE qui định (SetMetadata('roles', ['Admin']))
     return {
+      info,
       access_token: this.jwtService.sign(payload),
       message: 'login successfully',
     };
