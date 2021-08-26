@@ -1,14 +1,10 @@
 import {
   BadRequestException,
-  forwardRef,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Product } from 'src/product/entities/product.entity';
-import { ProductService } from 'src/product/product.service';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { Status, StatusDocument } from './entities/status.entity';
@@ -17,14 +13,13 @@ import { Status, StatusDocument } from './entities/status.entity';
 export class StatusService {
   constructor(
     @InjectModel(Status.name) private statusModel: Model<StatusDocument>,
-    @Inject(forwardRef(() => ProductService))
-    private readonly productService: ProductService,
   ) {}
 
   async create(createStatusDto: CreateStatusDto): Promise<Status> {
     const status = new this.statusModel(createStatusDto);
     return await status.save();
   }
+
   async findAll(): Promise<Status[]> {
     return await this.statusModel.find().populate('listProduct');
   }
@@ -45,11 +40,9 @@ export class StatusService {
   }
 
   async update(id: string, updateStatusDto: UpdateStatusDto): Promise<Status> {
-    const { idProduct, nameStatus } = updateStatusDto;
+    const { nameStatus } = updateStatusDto;
     const status = await this.statusModel.findById(id);
-    const product = await this.productService.findOne(idProduct);
     status.nameStatus = nameStatus;
-    status.listProduct.push(product);
     return await status.save();
   }
 
