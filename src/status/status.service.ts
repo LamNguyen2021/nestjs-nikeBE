@@ -21,7 +21,7 @@ export class StatusService {
   }
 
   async findAll(): Promise<Status[]> {
-    return await this.statusModel.find().populate('listProduct');
+    return await this.statusModel.find();
   }
 
   async findOne(id: string): Promise<Status> {
