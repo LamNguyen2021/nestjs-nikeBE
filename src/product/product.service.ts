@@ -36,6 +36,8 @@ export class ProductService {
   async findWithFilter(filter: ProductFilterDto) {
     const activeStatus = await this.findStatusWithName(StatusEnum.Active);
 
+    // không điền gì hết -> filter = {}
+
     const products = await this.productModel.find({
       name: {
         $regex: new RegExp('.*' + filter.name ? filter.name : '' + '.*'),
@@ -58,6 +60,7 @@ export class ProductService {
       ? await this.sizeModel.find({ _id: { $in: filter.sizeId } })
       : await this.sizeModel.find();
 
+    // tìm tất cả productDetail khớp với query
     const details = await this.productDetailModel
       .find({
         product: { $in: products },
@@ -73,10 +76,13 @@ export class ProductService {
       .populate('color');
 
     const result: ProductResponse[] = [];
-    details.forEach((detail) => {
+
+    details.forEach((detail, i) => {
       const tmp: ProductResponse = result.find(
         (item) => item.product === detail.product,
       );
+
+      // cùng 1 category, name thì quăng vào chung 1 chỗ
       if (tmp) {
         tmp.details.push(detail.depopulate('product'));
       } else {
