@@ -10,7 +10,6 @@ import {
   Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { IdUserDto } from './dto/id-user.dto';
@@ -22,6 +21,10 @@ import { ListRole } from 'src/auth/role/role.enum';
 import { Public } from 'src/Decorator/metadata';
 import { GetUser } from 'src/Decorator/decorator';
 import { Payload } from 'src/auth/role/payload';
+import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserProfileDto } from './dto/create-userProfile.dto';
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { UpdatePassword } from './dto/update-password.dto';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
@@ -30,15 +33,25 @@ import { Payload } from 'src/auth/role/payload';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Public()
   @Post()
   @ApiResponse({
     status: 201,
-    description: 'Create a User',
+    description: 'Create a User by admin',
     type: User,
   })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
+  }
+
+  @Public()
+  @Post('/createUserProfile')
+  @ApiResponse({
+    status: 201,
+    description: 'Create a User by user',
+    type: User,
+  })
+  createUser(@Body() createUserProfileDto: CreateUserProfileDto) {
+    return this.userService.createUserProfile(createUserProfileDto);
   }
 
   @Get()
@@ -64,10 +77,10 @@ export class UserController {
   }
 
   @Patch('/update')
-  @Roles(ListRole.Admin, ListRole.User)
+  @Roles(ListRole.Admin)
   @ApiResponse({
     status: 200,
-    description: 'Update a User by id',
+    description: 'Update a User by id role admin',
     type: User,
   })
   update(
@@ -75,6 +88,37 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return this.userService.updateUser({ id: payload.userId }, updateUserDto);
+  }
+
+  @Patch('/updateProfileUser')
+  @Roles(ListRole.User)
+  @ApiResponse({
+    status: 200,
+    description: 'Update a User by id role user',
+    type: User,
+  })
+  updateProfileUser(
+    @GetUser() payload: Payload,
+    @Body() updateUserProfileDto: UpdateUserProfileDto,
+  ): Promise<User> {
+    return this.userService.updateUserProfile(
+      { id: payload.userId },
+      updateUserProfileDto,
+    );
+  }
+
+  @Patch('/updatePassword')
+  @Roles(ListRole.User)
+  @ApiResponse({
+    status: 200,
+    description: 'Update password by user',
+    type: String,
+  })
+  updatePassword(
+    @GetUser() payload: Payload,
+    @Body() password: UpdatePassword,
+  ) {
+    return this.userService.updatePassword(password, { id: payload.userId });
   }
 
   @Delete(':id')
