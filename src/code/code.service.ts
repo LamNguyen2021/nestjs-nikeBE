@@ -3,11 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCodeDto } from './dto/create-code.dto';
 import { UpdateCodeDto } from './dto/update-code.dto';
-import { Code, CodeDocument } from './entities/code.entity';
+import { Code } from './entities/code.entity';
 
 @Injectable()
 export class CodeService {
-  constructor(@InjectModel(Code.name) private codeModel: Model<CodeDocument>) {}
+  constructor(@InjectModel(Code.name) private codeModel: Model<Code>) {}
 
   async create(createCodeDto: CreateCodeDto) {
     const code = new this.codeModel(createCodeDto);
