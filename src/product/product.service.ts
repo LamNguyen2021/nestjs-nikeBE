@@ -9,6 +9,7 @@ import { Category } from 'src/category/entities/category.entity';
 import { Color } from 'src/color/entities/color.entity';
 import { StatusEnum } from 'src/common/status.enum';
 import { Gender } from 'src/gender/entities/gender.entity';
+import { Image } from 'src/image/entities/image.entity';
 import { Size } from 'src/size/entities/size.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { CreateProductDetailDto } from './dto/create-product-detail.dto';
@@ -31,6 +32,7 @@ export class ProductService {
     @InjectModel(Color.name) private colorModel: Model<Color>,
     @InjectModel(Gender.name) private genderModel: Model<Gender>,
     @InjectModel(Size.name) private sizeModel: Model<Size>,
+    @InjectModel(Image.name) private imageModel: Model<Image>,
   ) {}
 
   async findWithFilter(filter: ProductFilterDto) {
@@ -77,21 +79,26 @@ export class ProductService {
 
     const result: ProductResponse[] = [];
 
-    details.forEach((detail, i) => {
+    for (const detail of details) {
       const tmp: ProductResponse = result.find(
         (item) => item.product === detail.product,
       );
 
       // cùng 1 category, name thì quăng vào chung 1 chỗ
       if (tmp) {
-        tmp.details.push(detail.depopulate('product'));
+        const images = await this.imageModel.find({ idShoesDetail: detail });
+        tmp.details.push({
+          info: detail.depopulate('product'),
+          images: images,
+        });
       } else {
+        const images = await this.imageModel.find({ idShoesDetail: detail });
         result.push({
           product: detail.product,
-          details: [detail.depopulate('product')],
+          details: [{ info: detail.depopulate('product'), images: images }],
         });
       }
-    });
+    }
 
     return result;
   }
