@@ -10,5 +10,6 @@ import { Code, CodeSchema } from './entities/code.entity';
   ],
   controllers: [CodeController],
   providers: [CodeService],
+  exports: [CodeService],
 })
 export class CodeModule {}
