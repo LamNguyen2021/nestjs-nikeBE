@@ -10,7 +10,7 @@ export class CreateOrderDto {
   @ApiProperty({ type: [String] })
   listIdDetailProduct: string[];
 
-  @IsDate()
+  // @IsDate()
   @ApiProperty({ type: Date })
   dateShip: Date;
 }

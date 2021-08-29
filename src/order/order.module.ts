@@ -9,6 +9,7 @@ import {
   ProductDetailSchema,
 } from 'src/product/entities/product-detail.entity';
 import { StatusModule } from 'src/status/status.module';
+import { CodeDetailModule } from 'src/code-detail/code-detail.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { StatusModule } from 'src/status/status.module';
       { name: ProductDetail.name, schema: ProductDetailSchema },
     ]),
     StatusModule,
+    CodeDetailModule,
   ],
   controllers: [OrderController],
   providers: [OrderService],

@@ -42,7 +42,7 @@ export class CodeDetailService {
       .populate('status');
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.codeDetailModel
       .findById(id, { __v: 0 })
       .populate('code')
@@ -50,11 +50,11 @@ export class CodeDetailService {
       .populate('status');
   }
 
-  update(id: number, updateCodeDetailDto: UpdateCodeDetailDto) {
+  update(id: string, updateCodeDetailDto: UpdateCodeDetailDto) {
     return `This action updates a #${id} codeDetail`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} codeDetail`;
   }
 }
