@@ -1,12 +1,7 @@
-import { Image } from 'src/image/entities/image.entity';
-import { ProductDetail } from '../entities/product-detail.entity';
 import { Product } from '../entities/product.entity';
+import { ProductDetailResponse } from './product-detail';
 
-class Detail {
-  info: ProductDetail;
-  images: Image[];
-}
 export class ProductResponse {
   product: Product;
-  details: Detail[];
+  details: ProductDetailResponse[];
 }

@@ -20,14 +20,5 @@ export class ProductDetail {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Gender' })
   gender: Gender;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Size' })
-  size: Size;
-
-  @Prop()
-  price: number;
-
-  @Prop()
-  quantity: number;
 }
 export const ProductDetailSchema = SchemaFactory.createForClass(ProductDetail);
