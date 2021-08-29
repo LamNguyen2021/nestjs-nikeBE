@@ -24,6 +24,10 @@ export class StatusService {
     return await this.statusModel.find();
   }
 
+  async findByName(name: string): Promise<Status> {
+    return await this.statusModel.findOne({ nameStatus: name });
+  }
+
   async findOne(id: string): Promise<Status> {
     let status;
     try {
