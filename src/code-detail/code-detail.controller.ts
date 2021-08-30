@@ -29,7 +29,7 @@ export class CodeDetailController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.codeDetailService.findOne(+id);
+    return this.codeDetailService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class CodeDetailController {
     @Param('id') id: string,
     @Body() updateCodeDetailDto: UpdateCodeDetailDto,
   ) {
-    return this.codeDetailService.update(+id, updateCodeDetailDto);
+    return this.codeDetailService.update(id, updateCodeDetailDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.codeDetailService.remove(+id);
+    return this.codeDetailService.remove(id);
   }
 }
