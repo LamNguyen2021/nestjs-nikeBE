@@ -23,4 +23,10 @@ export class CreateOrderDto {
   // @IsDate()
   @ApiProperty({ type: Date })
   dateShip: Date;
+
+  @ApiProperty({
+    type: Boolean,
+    default: false,
+  })
+  isPayment: boolean;
 }
