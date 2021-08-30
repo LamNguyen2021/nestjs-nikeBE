@@ -14,7 +14,6 @@ export class DetailProduct {
 }
 
 export class CreateOrderDto {
-  @IsMongoId()
   @ApiProperty({ type: String })
   idDiscount: string;
 
