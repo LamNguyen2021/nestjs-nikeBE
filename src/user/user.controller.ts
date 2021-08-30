@@ -76,7 +76,7 @@ export class UserController {
     return this.userService.findOneUser({ id: payload.userId });
   }
 
-  @Patch('/update')
+  @Patch('/update/:id')
   @Roles(ListRole.Admin)
   @ApiResponse({
     status: 200,
@@ -84,10 +84,10 @@ export class UserController {
     type: User,
   })
   update(
-    @GetUser() payload: Payload,
+    @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userService.updateUser({ id: payload.userId }, updateUserDto);
+    return this.userService.updateUser({ id: id }, updateUserDto);
   }
 
   @Patch('/updateProfileUser')
