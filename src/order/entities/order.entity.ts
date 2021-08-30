@@ -20,14 +20,17 @@ export class Order {
   @Prop()
   totalPrice: number;
 
+  @Prop()
+  subTotal: number;
+
   @Prop({ default: Date.now })
   dateOrder: Date;
 
   @Prop()
   dateShip: Date;
 
-  @Prop()
-  isPayment: boolean;
+  // @Prop()
+  // isPayment: boolean;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

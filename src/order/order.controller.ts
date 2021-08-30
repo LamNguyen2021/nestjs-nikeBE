@@ -14,7 +14,9 @@ import { GetUser } from 'src/Decorator/decorator';
 import { Payload } from 'src/auth/role/payload';
 import { Roles } from 'src/Guards/roles.decorator';
 import { ListRole } from 'src/auth/role/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Order')
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
@@ -26,8 +28,9 @@ export class OrderController {
   }
 
   @Get()
-  findAll() {
-    return this.orderService.findAll();
+  @Roles(ListRole.User)
+  findAll(@GetUser() user: Payload) {
+    return this.orderService.findAllByUser(user);
   }
 
   @Get(':id')

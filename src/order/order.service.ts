@@ -107,7 +107,7 @@ export class OrderService {
     };
   }
 
-  findAll() {
+  findAllByUser(payload: Payload) {
     return `This action returns all order`;
   }
 
