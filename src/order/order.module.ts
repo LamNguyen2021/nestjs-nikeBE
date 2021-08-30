@@ -19,6 +19,11 @@ import {
 } from 'src/code-detail/entities/code-detail.entity';
 import { Code, CodeSchema } from 'src/code/entities/code.entity';
 import { Status, StatusSchema } from 'src/status/entities/status.entity';
+import {
+  Category,
+  CategorySchema,
+} from 'src/category/entities/category.entity';
+import { Role, RoleSchema } from 'src/role/entities/role.entity';
 
 @Module({
   imports: [
@@ -32,6 +37,8 @@ import { Status, StatusSchema } from 'src/status/entities/status.entity';
       { name: Status.name, schema: StatusSchema },
       { name: Code.name, schema: CodeSchema },
       { name: CodeDetail.name, schema: CodeDetailSchema },
+      { name: Category.name, schema: CategorySchema },
+      { name: Role.name, schema: RoleSchema },
     ]),
     StatusModule,
     CodeDetailModule,

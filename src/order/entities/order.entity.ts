@@ -21,7 +21,7 @@ export class Order {
   totalPrice: number;
 
   @Prop()
-  subTotal: number;
+  subTotalPrice: number;
 
   @Prop({ default: Date.now })
   dateOrder: Date;
