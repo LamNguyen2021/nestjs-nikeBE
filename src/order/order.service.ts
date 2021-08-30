@@ -22,19 +22,20 @@ export class OrderService {
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {
-    const { dateShip, idDiscount, listIdDetailProduct } = createOrderDto;
+    const { dateShip, idDiscount, listDetailProduct } = createOrderDto;
     const statusActive = await this.statusService.findByName(StatusEnum.Active);
     const arrayProduct = [];
     let mess = '';
 
-    for (const idDetailProduct of listIdDetailProduct) {
+    for (const item of listDetailProduct) {
       const productDetail = await this.productDetailModel.findOne({
-        _id: idDetailProduct,
+        _id: item.idProduct,
         quantity: { $gt: 0 },
         status: statusActive,
       });
+
       if (!productDetail) {
-        mess += idDetailProduct + '';
+        mess += item.idProduct + '';
       } else {
         arrayProduct.push(productDetail);
       }
