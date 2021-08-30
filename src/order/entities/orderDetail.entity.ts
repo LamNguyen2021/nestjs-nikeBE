@@ -13,10 +13,16 @@ export class OrderDetail {
   nameProduct: string;
 
   @Prop()
-  price: number;
+  categoryName: string;
 
   @Prop()
-  categoryName: string;
+  size: string;
+
+  @Prop()
+  quantity: number;
+
+  @Prop()
+  price: number;
 
   @Prop()
   color: string;
