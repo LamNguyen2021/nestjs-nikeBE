@@ -20,12 +20,15 @@ export class CodeDetailService {
 
   async create(createCodeDetailDto: CreateCodeDetailDto): Promise<string> {
     const { idCode, listIdUsers, idStatus } = createCodeDetailDto;
-    const array = [];
+
     const code = await this.codeService.findOne(idCode);
+    const statusActive = await this.statusService.findByName(StatusEnum.Active);
+    const array = [];
+
     if (!code) {
       throw new BadRequestException(`codeID: ${code._id} not found`);
     }
-    const statusActive = await this.statusService.findByName(StatusEnum.Active);
+
     for (const idUser of listIdUsers) {
       const user = await this.userService.findOneUser({ id: idUser });
       const codeDetail = await this.codeDetailModel.findOne({
@@ -37,16 +40,17 @@ export class CodeDetailService {
         array.push(user.email);
       }
     }
+
     if (array.length === 0) {
       for (const idUser of listIdUsers) {
         const user = await this.userService.findOneUser({ id: idUser });
-        // const code  = await this.codeService.findOne(idCode);
         const status = await this.statusService.findOne(idStatus);
         const codeDetail = new this.codeDetailModel({
           code: code,
           user: user,
           status: status,
         });
+
         await codeDetail.save();
       }
     } else {
