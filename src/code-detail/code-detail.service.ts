@@ -31,6 +31,8 @@ export class CodeDetailService {
 
     for (const idUser of listIdUsers) {
       const user = await this.userService.findOneUser({ id: idUser });
+
+      // tìm xem user đã có mã giảm giá này chưa, nếu có rồi thì không cho nữa
       const codeDetail = await this.codeDetailModel.findOne({
         status: statusActive,
         user: user,
