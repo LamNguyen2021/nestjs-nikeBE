@@ -54,6 +54,8 @@ export class OrderService {
     let mess = [];
 
     for (const item of listDetailProduct) {
+      console.log('item', item);
+
       const detail = await this.productDetailModel.findById(
         item.idDetailProduct,
       );
@@ -65,6 +67,7 @@ export class OrderService {
       });
 
       if (!quantity) {
+        // số lượng yêu cầu lớn hơn số lượng trong kho
         mess.push(item.idDetailProduct);
       } else {
         subTotalPrice += quantity.price * item.quantity;
@@ -81,7 +84,9 @@ export class OrderService {
     let discount = null;
 
     if (idDiscount) {
+      // có mã giảm giá thì giảm cho người ta, áp dụng xong thì hủy luôn mã đó để khỏi xài nữa
       const code = await this.codeModel.findById(idDiscount);
+
       discount = await this.codeDetailModel
         .findOneAndUpdate(
           { code: code, user: user, status: statusActive },
@@ -109,7 +114,9 @@ export class OrderService {
     }).save();
 
     for (const item of arrayProduct) {
+      // sl có trong kho - sl đặt
       const quantity = item[0].quantity - item[1];
+
       await this.quantityModel.findByIdAndUpdate(
         { _id: item[0]._id },
         { quantity: quantity },
