@@ -154,7 +154,11 @@ export class OrderService {
       .populate('discount', { _id: 0, __v: 0, createDate: 0 })
       .populate('status', { _id: 0, __v: 0 });
 
+    console.log('historyOrder', historyOrder);
+
     for (const item of historyOrder) {
+      console.log('item', item);
+
       const details = await this.orderDetailModel.find({ order: item });
       result.push({ info: item, products: details });
     }
