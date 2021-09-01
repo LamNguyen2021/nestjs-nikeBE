@@ -167,12 +167,13 @@ export class OrderService {
   }
 
   async findAll() {
+    const result: OrderUsersResponse[] = [];
     const role = await this.roleModel.findOne({ nameRole: ListRole.User });
     const users = await this.userModel
       .find({ role: role })
       .populate('status', { _id: 0, __v: 0 })
       .populate('role', { _id: 0, __v: 0 });
-    const result: OrderUsersResponse[] = [];
+
     for (const user of users) {
       const orders: OrderUserResponse[] = [];
       const historyOrder = await this.orderModel
@@ -188,9 +189,9 @@ export class OrderService {
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} order`;
+  // }
 
   async update(id: string, updateOrderDto: UpdateOrderDto) {
     const { idStatus } = updateOrderDto;
@@ -199,7 +200,7 @@ export class OrderService {
     return `update successfully ${id} order ${status.nameStatus}`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} order`;
+  // }
 }
