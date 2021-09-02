@@ -91,7 +91,7 @@ export class UserController {
   }
 
   @Patch('/updateProfileUser')
-  @Roles(ListRole.User)
+  @Roles(ListRole.User, ListRole.Admin)
   @ApiResponse({
     status: 200,
     description: 'Update a User by id role user',
@@ -108,7 +108,7 @@ export class UserController {
   }
 
   @Patch('/updatePassword')
-  @Roles(ListRole.User)
+  @Roles(ListRole.User, ListRole.Admin)
   @ApiResponse({
     status: 200,
     description: 'Update password by user',
