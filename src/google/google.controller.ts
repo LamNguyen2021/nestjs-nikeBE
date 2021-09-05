@@ -13,6 +13,6 @@ export class GoogleController {
     description: 'login with google by sending tokenId',
   })
   checkTokenId(@Param('tokenId') tokenId: string) {
-    this.googleService.googleLogin(tokenId);
+    return this.googleService.googleLogin(tokenId);
   }
 }
