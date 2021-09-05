@@ -30,7 +30,7 @@ export class CodeDetailController {
     return this.codeDetailService.create(createCodeDetailDto);
   }
 
-  @Roles(ListRole.User)
+  // @Roles(ListRole.User)
   @Get('getCodeDetailUser')
   getCodeDetailUser(@Request() req) {
     return this.codeDetailService.getCodeDetailUser(req.user.userId);

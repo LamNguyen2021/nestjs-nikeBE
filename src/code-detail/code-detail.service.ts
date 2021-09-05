@@ -39,11 +39,13 @@ export class CodeDetailService {
         code: code,
       });
       if (codeDetail) {
-        array.push(user.email);
+        // user đã có codedetail này rồi
+        array.push(user.email); // bỏ vô mảng lát nữa báo lỗi
       }
     }
 
     if (array.length === 0) {
+      // chưa có user nào có mã này hết
       for (const idUser of listIdUsers) {
         const user = await this.userService.findOneUser({ id: idUser });
         const status = await this.statusService.findOne(idStatus);
