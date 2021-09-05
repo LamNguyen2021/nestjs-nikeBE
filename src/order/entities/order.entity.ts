@@ -29,8 +29,8 @@ export class Order {
   @Prop()
   dateShip: Date;
 
-  // @Prop()
-  // isPayment: boolean;
+  @Prop()
+  isPayment: boolean;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
