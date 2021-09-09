@@ -149,12 +149,13 @@ export class OrderService {
     const user = await this.userModel.findById(userId);
     const result: OrderUserResponse[] = [];
     const historyOrder = await this.orderModel
-      .find({ user }, { user: 0, __v: 0 })
+      .find({ user }, { __v: 0 })
+      .populate('user', { __v: 0, password: 0 })
       .sort({ dateOrder: -1 })
       .populate('discount', { _id: 0, __v: 0, createDate: 0 })
       .populate('status', { _id: 0, __v: 0 });
 
-    console.log('historyOrder', historyOrder);
+    // console.log('historyOrder', historyOrder);
 
     for (const item of historyOrder) {
       console.log('item', item);
