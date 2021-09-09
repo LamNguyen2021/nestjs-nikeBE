@@ -182,13 +182,12 @@ export class UserService {
       throw new NotFoundException(`id user: ${idUserDto.id} not found`);
     }
 
-    const { name, email, yearOfBirth, address, username } =
-      updateUserProfileDto;
+    const { name, yearOfBirth, address } = updateUserProfileDto;
 
     const updatedUser = await this.userModel
       .findByIdAndUpdate(
         idUserDto.id,
-        { name, email, username, yearOfBirth, address },
+        { name, yearOfBirth, address },
         { new: true, runValidators: true },
       )
       .populate('role')
